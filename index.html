@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PMR Madya SMPN 1 Jumapolo</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="container nav-content">
+        <div class="logo-wrapper">
+          <img src="img/logopmr.jpeg" alt="Logo" class="logo-img" />
+          <div class="logo-text">PRAMASAJU</div>
+        </div>
+
+        <!-- HAMBURGER MENU (MOBILE) -->
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+
+        <!-- MENU -->
+        <ul class="nav-links" id="navMenu">
+          <li><a href="#home">Beranda</a></li>
+          <li><a href="#about">Tentang</a></li>
+          <li><a href="#news">Berita</a></li>
+          <li><a href="#activities">Kegiatan</a></li>
+          <li><a href="#contact">Kontak</a></li>
+
+          <!-- MENU LAINNYA DROPDOWN -->
+          <li class="dropdown">
+            <a href="javascript:void(0)" class="dropdown-trigger">Lainnya</a>
+            <ul class="dropdown-menu">
+              <li><a href="pendaftaran.html">Pendaftaran</a></li>
+              <li><a href="gallery-photo.html">Galeri Foto</a></li>
+              <li><a href="gallery-video.html">Galeri Video</a></li>
+              <li><a href="organization.html">Struktur Organisasi</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- HERO SLIDER -->
+<section id="home" class="hero">
+
+  <div class="slider">
+
+    <!-- Slide 1 -->
+    <div class="slide active" style="background-image: url('img/bg1.jpeg');">
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide" style="background-image: url('img/bg2.jpeg');">
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide" style="background-image: url('img/bg3.jpeg');">
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide" style="background-image: url('img/bg4.jpeg');">
+    </div>
+
+  </div>
+
+  <div class="hero-content">
+    <h1>PMR Madya SMPN 1 Jumapolo</h1>
+    <p>Peduli, Sigap, dan Siap Menolong.</p>
+      <!-- CTA -->
+    <a href="pendaftaran.html" class="cta-btn">Bergabung Sekarang</a>
+  </div>
+</section>
+    </section>
+
+    <!-- TENTANG -->
+    <section id="about" class="section">
+      <div class="container">
+        <h2 class="section-title">Tentang PRAMASAJU</h2>
+
+        <div class="about-grid">
+          <!-- EKSTRAKURIKULER -->
+          <div class="about-card">
+            <h3>Ekstrakurikuler PMR</h3>
+            <p>
+              Kegiatan pembinaan karakter, kepedulian sosial, dan keterampilan
+              kemanusiaan bagi siswa SMP melalui program PMR Madya.
+            </p>
+            <button class="more-btn" onclick="openAbout(1)">
+              Baca Selengkapnya
+            </button>
+          </div>
+
+          <!-- VISI -->
+          <div class="about-card">
+            <h3>Visi</h3>
+            <p>
+              Terwujudnya anggota PMR Madya yang beriman, berkarakter, terampil,
+              peduli, dan bertanggung jawab dalam kegiatan kepalangmerahan.
+            </p>
+            <button class="more-btn" onclick="openAbout(2)">
+              Baca Selengkapnya
+            </button>
+          </div>
+
+          <!-- MISI -->
+          <div class="about-card">
+            <h3>Misi</h3>
+            <p>
+              Menumbuhkan sikap peduli, meningkatkan kemampuan pertolongan
+              pertama, serta membentuk jiwa kepemimpinan anggota PMR.
+            </p>
+            <button class="more-btn" onclick="openAbout(3)">
+              Baca Selengkapnya
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODAL POPUP -->
+    <div id="aboutModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeAbout()">&times;</span>
+        <div id="modalText"></div>
+      </div>
+    </div>
+
+    <!-- BERITA -->
+    <section id="news" class="section">
+      <div class="container">
+        <h2 class="section-title">Berita Terbaru</h2>
+
+        <div class="news-grid">
+          <!-- KARTU BERITA 1 -->
+          <div class="news-card">
+            <img src="img/youthcamp.jpg" class="news-img" alt="Youth Camp" />
+            <h3 class="news-title">
+              Menumbuhkan Jiwa Kepemimpinan dan Kemanusiaan melalui Youth Camp
+              Red Cross PMR Kabupaten Karanganyar
+            </h3>
+            <p class="news-desc">
+              Kegiatan ekstrakurikuler di sekolah memiliki peran penting dalam
+              membentuk karakter dan kepribadian peserta didik.
+            </p>
+            <a href="news.html?id=1" class="btn-read">Baca Selengkapnya</a>
+          </div>
+
+          <!-- KARTU BERITA 2 -->
+          <div class="news-card">
+            <img src="img/frosity6.jpg" class="news-img" alt="Kerjasama Baru" />
+            <h3 class="news-title">
+              Semangat Kemanusiaan di Kalangan Remaja: Kiprah PMR SMPN 1
+              Jumapolo dalam Frosity#6 2024
+            </h3>
+            <p class="news-desc">
+              Palang Merah Remaja (PMR) merupakan wadah pembinaan generasi muda
+              dalam menumbuhkan rasa kemanusiaan, kepedulian sosial, dan
+              keterampilan hidup.
+            </p>
+            <a href="news.html?id=2" class="btn-read">Baca Selengkapnya</a>
+          </div>
+
+          <!-- KARTU BERITA 3 -->
+          <div class="news-card">
+            <img src="img/gojila.jpg" class="news-img" alt="Event Digital" />
+            <h3 class="news-title">
+              SEMANGAT RELAWAN MUDA: PRAMASAJU RAIH JUARA II DI AJANG GOJILA
+              2025
+            </h3>
+            <p class="news-desc">
+              Palang Merah Remaja (PMR) merupakan wadah pembinaan generasi muda
+              dalam menumbuhkan semangat kemanusiaan, kepedulian sosial, dan
+              tanggung jawab terhadap sesama.
+            </p>
+            <a href="news.html?id=3" class="btn-read">Baca Selengkapnya</a>
+          </div>
+
+          <!-- KARTU BERITA 4 -->
+          <div class="news-card">
+            <img src="img/frosity7.jpg" class="news-img" alt="Event Digital" />
+            <h3 class="news-title">
+              MENUMBUHKAN JIWA KEMANUSIAAN MELALUI AJANG FROSITY#7 2025
+            </h3>
+            <p class="news-desc">
+              Kegiatan ekstrakurikuler di sekolah memiliki peran penting dalam
+              membentuk karakter dan kepribadian peserta didik.
+            </p>
+            <a href="news.html?id=4" class="btn-read">Baca Selengkapnya</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KEGIATAN DENGAN KARTU FOTO -->
+    <section
+      id="activities"
+      class="section"
+      style="padding: 60px 0; font-family: Arial, sans-serif"
+    >
+      <div class="container" style="width: 90%; margin: auto">
+        <h2
+          class="section-title"
+          style="text-align: center; font-size: 32px; margin-bottom: 40px"
+        >
+          Kegiatan
+        </h2>
+
+        <div
+          class="service-grid"
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+          "
+        >
+          <!-- Kartu 1 -->
+          <div
+            class="service-card"
+            onclick="openActivity('workshop.html')"
+            style="
+              cursor: pointer;
+              background: #fff;
+              border-radius: 14px;
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+              overflow: hidden;
+              transition: 0.3s;
+            "
+          >
+            <img
+              src="img/latihan6.jpg"
+              style="width: 100%; height: 180px; object-fit: cover"
+            />
+            <div style="padding: 20px">
+              <h3 style="margin-bottom: 10px">Latihan Rutin</h3>
+              <p>Kegiatan pelatihan & edukasi rutin.</p>
+            </div>
+          </div>
+
+          <!-- Kartu 2 -->
+          <div
+            class="service-card"
+            onclick="openActivity('kesehatan.html')"
+            style="
+              cursor: pointer;
+              background: #fff;
+              border-radius: 14px;
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+              overflow: hidden;
+              transition: 0.3s;
+            "
+          >
+            <img
+              src="img/kesehatan1.jpg"
+              style="width: 100%; height: 180px; object-fit: cover"
+            />
+            <div style="padding: 20px">
+              <h3 style="margin-bottom: 10px">Kesehatan</h3>
+              <p>Cek Kesehatan Gratis (CKG) PMR & Puskesmas.</p>
+            </div>
+          </div>
+
+          <!-- Kartu 3 -->
+          <div
+            class="service-card"
+            onclick="openActivity('perlombaan.html')"
+            style="
+              cursor: pointer;
+              background: #fff;
+              border-radius: 14px;
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+              overflow: hidden;
+              transition: 0.3s;
+            "
+          >
+            <img
+              src="img/lomba.jpg"
+              style="width: 100%; height: 180px; object-fit: cover"
+            />
+            <div style="padding: 20px">
+              <h3 style="margin-bottom: 10px">Perlombaan</h3>
+              <p>Pramasaju aktif mengikuti berbagai event perlombaan.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      function openActivity(page) {
+        window.location.href = page;
+      }
+    </script>
+
+    <!-- KONTAK -->
+    <!-- CONTACT PAGE (HTML) -->
+    <!DOCTYPE html>
+    <html lang="id">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Kontak Kami - PRAMASAJU</title>
+        <link rel="stylesheet" href="css/style.css" />
+      </head>
+      <body>
+        <section id="contact" class="section">
+          <div class="container contact-card">
+            <h2 class="section-title">Kontak Kami</h2>
+
+            <div class="contact-wrapper">
+              <!-- INFO KONTAK -->
+              <div class="contact-info">
+                <h3>Informasi Kontak</h3>
+                <p>
+                  <strong>Alamat:</strong><br />
+                  Jl. Raya Jumapolo – Karanganyar km 01<br />
+                  Kode Pos 57783<br />
+                  Telp. 08112640909
+                </p>
+
+                <p><strong>Peta Sekolah:</strong><br /></p>
+                <div class="row">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.8022531883876!2d111.00142667411913!3d-7.704357976309!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a269f2c321f13%3A0x798b803f46c532f8!2s1st%20State%20Junior%20High%20School%2C%20Jumapolo!5e0!3m2!1sen!2sid!4v1764485881231!5m2!1sen!2sid"
+                    width="400"
+                    height="250"
+                    style="border: 0"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                </div>
+
+                <p>
+                  <strong>Nomor Telepon:</strong><br />
+                  0812-1782-2438
+                </p>
+
+                <p>
+                  <strong>Email:</strong><br />
+                  <a href="mailto:pramasaju@gmail.com" class="email-link"
+                    >pramasaju@gmail.com</a
+                  >
+                </p>
+              </div>
+
+              <!-- FORM KONTAK -->
+              <form
+                class="contact-form"
+                id="contactForm"
+                name="kontak-pramasaju"
+              >
+                <h3>Kirim Pesan</h3>
+                <input
+                  type="text"
+                  id="name"
+                  placeholder="Nama Anda"
+                  required
+                  name="nama"
+                />
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Email Anda"
+                  required
+                  name="email"
+                />
+                <textarea
+                  id="message"
+                  placeholder="Pesan Anda"
+                  name="pesan"
+                  required
+                ></textarea>
+                <button type="submit" class="btn-primary">Kirim Pesan</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+          <div class="container footer-content">
+            <p>© 2024 PRAMASAJU - PMR Madya SMPN 1 Jumapolo</p>
+
+            <div class="social-links">
+              <a
+                href="https://www.instagram.com/pmr.spensaju?igsh=MXY1Znd1amF2bngyMQ=="
+                target="_blank"
+              >
+                <img
+                  src="img/instagram.png"
+                  alt="Instagram"
+                  class="social-icon"
+                />
+              </a>
+
+              <a
+                href="https://www.tiktok.com/@pramasaju?_r=1&_t=ZS-91o2KkgSbIX"
+                target="_blank"
+              >
+                <img src="img/tiktok.png" alt="TikTok" class="social-icon" />
+              </a>
+            </div>
+          </div>
+        </footer>
+
+        <script src="js/script.js"></script>
+
+        <script>
+          function toggleMenu() {
+            const nav = document.getElementById("navMenu");
+            nav.classList.toggle("show");
+          }
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+          const scriptURL =
+            "https://script.google.com/macros/s/AKfycby3KwLeX_WEZNGGEdMNpWQLRfcgrsvJ1T_84BxVm_Szm1TEjfgMK2KjKcSKvD2Ga5KbTw/exec";
+          const form = document.forms["kontak-pramasaju"];
+
+          form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            fetch(scriptURL, { method: "POST", body: new FormData(form) }).then(
+              (message) => alert
+            );
+            Swal.fire({
+              title: "Terima Kasih!",
+              text: "Pesan anda telah kami terima!",
+              icon: "success",
+            });
+            form.reset();
+            return false;
+          });
+        </script>
+        <script>
+let currentSlide = 0;
+const slides = document.querySelectorAll(".slide");
+
+function changeSlide() {
+  slides[currentSlide].classList.remove("active");
+
+  currentSlide = (currentSlide + 1) % slides.length;
+
+  slides[currentSlide].classList.add("active");
+}
+
+setInterval(changeSlide, 5000); // 5 detik per slide
+</script>
+      </body>
+    </html>
+  </body>
+</html>

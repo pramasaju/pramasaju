@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail Berita</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="container detail-container">
+      <a href="index.html#news" class="btn-read">← Kembali ke Berita</a>
+
+      <h1 id="detailTitle" class="detail-title"></h1>
+      <img id="detailImage" class="detail-image" alt="Gambar Berita" />
+      <div id="detailContent" class="detail-content"></div>
+    </div>
+
+    <script src="js/script.js"></script>
+
+    <script>
+      function toggleMenu() {
+        const menu = document.getElementById("navMenu");
+        menu.classList.toggle("show");
+      }
+
+      // Dropdown untuk mobile
+      document.addEventListener("DOMContentLoaded", () => {
+        const dropdown = document.querySelector(".dropdown");
+        const trigger = document.querySelector(".dropdown-trigger");
+
+        trigger.addEventListener("click", (e) => {
+          e.preventDefault();
+          dropdown.classList.toggle("active");
+        });
+      });
+    </script>
+  </body>
+</html>

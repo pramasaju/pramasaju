@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pendaftaran Anggota PMR</title>
+    <link rel="stylesheet" href="css/pendaftaran.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Formulir Pendaftaran PMR</h2>
+
+      <form id="pendaftaranForm" name="form-pendaftaran">
+        <label>Nama Lengkap</label>
+        <input type="text" name="nama lengkap" required />
+
+        <label>Nama Panggilan</label>
+        <input type="text" name="nama panggilan" required />
+
+        <label>Tempat Tanggal Lahir</label>
+        <input type="text" name="ttl" required />
+
+        <label>Jenis Kelamin</label>
+        <select name="jenis kelamin" required>
+          <option value="">-- Pilih --</option>
+          <option>Laki-laki</option>
+          <option>Perempuan</option>
+        </select>
+
+        <label>Golongan Darah</label>
+        <select name="golongan darah" required>
+          <option value="">-- Pilih --</option>
+          <option>A</option>
+          <option>B</option>
+          <option>AB</option>
+          <option>O</option>
+          <option>-</option>
+        </select>
+
+        <label>Agama</label>
+        <select name="agama" required>
+          <option value="">-- Pilih --</option>
+          <option>Islam</option>
+          <option>Protestan</option>
+          <option>Katolik</option>
+          <option>Hindu</option>
+          <option>Buddha</option>
+          <option>Konghucu</option>
+        </select>
+
+        <label>Kelas</label>
+        <select name="kelas" required>
+          <option value="">-- Pilih --</option>
+          <option>VII A</option>
+          <option>VII B</option>
+          <option>VII C</option>
+          <option>VII D</option>
+          <option>VII E</option>
+          <option>VII F</option>
+          <option>VII G</option>
+        </select>
+
+        <label>Alamat Lengkap</label>
+        <textarea name="alamat lengkap" rows="3" required></textarea>
+
+        <label>Nomor Telepon / Handphone</label>
+        <input type="number" name="telepon" required />
+
+        <label>Email Aktif</label>
+        <input type="email" name="email" required />
+
+        <label>Nomor Induk Kependudukan (NIK)</label>
+        <input type="number" name="nik" required />
+
+        <label>Nama Orang Tua - Ayah</label>
+        <input type="text" name="ayah" required />
+
+        <label>Nama Orang Tua - Ibu</label>
+        <input type="text" name="ibu" required />
+
+        <button type="submit">Kirim Pendaftaran</button>
+      </form>
+
+      <div class="download-section">
+        <h3>Download Dokumen</h3>
+        <a href="Formulir_Pendaftaran_Pramasaju.pdf" download
+          >Download Formulir Pendaftaran</a
+        >
+        <a href="Surat_Pernyataan_Pramasaju.pdf" download
+          >Download Surat Pernyataan</a
+        >
+      </div>
+
+      <a href="index.html" class="btn-back">Kembali</a>
+    </div>
+    <script src="js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      const scriptURL =
+        "https://script.google.com/macros/s/AKfycbwugDCUferVVI-HbXh7Mk7CgEaWlde4rN03ekdBTCuUReyPYiy_x1Dfj0_N8ZgAUNA/exec";
+      const form = document.forms["form-pendaftaran"];
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        fetch(scriptURL, { method: "POST", body: new FormData(form) }).then(
+          (message) => alert
+        );
+        Swal.fire({
+          title: "Berhasil!",
+          text: "Pendaftaran telah berhasil!",
+          icon: "success",
+        });
+        form.reset();
+        return false;
+      });
+    </script>
+  </body>
+</html>
