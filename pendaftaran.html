@@ -5,30 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pendaftaran Anggota PMR</title>
     <link rel="stylesheet" href="css/pendaftaran.css" />
+    <link rel="stylesheet" href="css/cms.css" />
   </head>
-  <body>
+  <body data-page="pendaftaran">
     <div class="container">
       <h2>Formulir Pendaftaran PMR</h2>
 
+      <div id="formClosed" class="notice" style="display: none" data-cfg="pendaftaranInfo">Pendaftaran anggota baru sedang ditutup.</div>
+
       <form id="pendaftaranForm" name="form-pendaftaran">
+        <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <label>Nama Lengkap</label>
-        <input type="text" name="nama lengkap" required />
+        <input type="text" name="NamaLengkap" required />
 
         <label>Nama Panggilan</label>
-        <input type="text" name="nama panggilan" required />
+        <input type="text" name="NamaPanggilan" required />
 
         <label>Tempat Tanggal Lahir</label>
-        <input type="text" name="ttl" required />
+        <input type="text" name="TTL" required />
 
         <label>Jenis Kelamin</label>
-        <select name="jenis kelamin" required>
+        <select name="JenisKelamin" required>
           <option value="">-- Pilih --</option>
           <option>Laki-laki</option>
           <option>Perempuan</option>
         </select>
 
         <label>Golongan Darah</label>
-        <select name="golongan darah" required>
+        <select name="GolDarah" required>
           <option value="">-- Pilih --</option>
           <option>A</option>
           <option>B</option>
@@ -38,7 +42,7 @@
         </select>
 
         <label>Agama</label>
-        <select name="agama" required>
+        <select name="Agama" required>
           <option value="">-- Pilih --</option>
           <option>Islam</option>
           <option>Protestan</option>
@@ -49,7 +53,7 @@
         </select>
 
         <label>Kelas</label>
-        <select name="kelas" required>
+        <select name="Kelas" required>
           <option value="">-- Pilih --</option>
           <option>VII A</option>
           <option>VII B</option>
@@ -61,57 +65,45 @@
         </select>
 
         <label>Alamat Lengkap</label>
-        <textarea name="alamat lengkap" rows="3" required></textarea>
+        <textarea name="Alamat" rows="3" required></textarea>
 
         <label>Nomor Telepon / Handphone</label>
-        <input type="number" name="telepon" required />
+        <input type="number" name="Telepon" required />
 
         <label>Email Aktif</label>
-        <input type="email" name="email" required />
+        <input type="email" name="Email" required />
 
         <label>Nomor Induk Kependudukan (NIK)</label>
-        <input type="number" name="nik" required />
+        <input type="number" name="NIK" required />
 
         <label>Nama Orang Tua - Ayah</label>
-        <input type="text" name="ayah" required />
+        <input type="text" name="Ayah" required />
 
         <label>Nama Orang Tua - Ibu</label>
-        <input type="text" name="ibu" required />
+        <input type="text" name="Ibu" required />
 
         <button type="submit">Kirim Pendaftaran</button>
       </form>
 
       <div class="download-section">
         <h3>Download Dokumen</h3>
-        <a href="Formulir_Pendaftaran_Pramasaju.pdf" download
+        <a href="Formulir_Pendaftaran_Pramasaju.pdf" data-cfg-href="formulirUrl" target="_blank" rel="noopener"
           >Download Formulir Pendaftaran</a
         >
-        <a href="Surat_Pernyataan_Pramasaju.pdf" download
+        <a href="Surat_Pernyataan_Pramasaju.pdf" data-cfg-href="suratUrl" target="_blank" rel="noopener"
           >Download Surat Pernyataan</a
         >
       </div>
 
       <a href="index.html" class="btn-back">Kembali</a>
     </div>
-    <script src="js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/config.js"></script>
+    <script src="js/cms.js"></script>
     <script>
-      const scriptURL =
-        "https://script.google.com/macros/s/AKfycbwugDCUferVVI-HbXh7Mk7CgEaWlde4rN03ekdBTCuUReyPYiy_x1Dfj0_N8ZgAUNA/exec";
-      const form = document.forms["form-pendaftaran"];
-
-      form.addEventListener("submit", (e) => {
+      document.getElementById("pendaftaranForm").addEventListener("submit", function (e) {
         e.preventDefault();
-        fetch(scriptURL, { method: "POST", body: new FormData(form) }).then(
-          (message) => alert
-        );
-        Swal.fire({
-          title: "Berhasil!",
-          text: "Pendaftaran telah berhasil!",
-          icon: "success",
-        });
-        form.reset();
-        return false;
+        CMS.submitForm(this, "pendaftaran", "Berhasil!", "Pendaftaran telah berhasil dikirim!");
       });
     </script>
   </body>
