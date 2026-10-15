@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cek Sambungan Website - PRAMASAJU</title>
+<style>
+  body { font-family: system-ui, Arial, sans-serif; background: #f4f6fa; color: #1d2433; margin: 0; padding: 20px; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 22px; color: #0f3566; margin: 0 0 4px; }
+  .sub { color: #667085; font-size: 14px; margin-bottom: 18px; }
+  .verdict { padding: 14px 16px; border-radius: 10px; font-weight: 600; margin-bottom: 16px; background: #e8eefc; }
+  .verdict.ok { background: #e3f6ec; color: #146c43; }
+  .verdict.bad { background: #fdecec; color: #a4202c; }
+  .row { background: #fff; border: 1px solid #e2e6ee; border-left-width: 6px; border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; }
+  .row.ok { border-left-color: #198754; }
+  .row.bad { border-left-color: #dc3545; }
+  .row.warn { border-left-color: #f0a000; }
+  .row.wait { border-left-color: #9aa5b8; }
+  .t { font-weight: 600; }
+  .tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 99px; margin-right: 6px; color: #fff; }
+  .ok .tag { background: #198754; } .bad .tag { background: #dc3545; } .warn .tag { background: #f0a000; } .wait .tag { background: #9aa5b8; }
+  .d { font-size: 13px; color: #475467; margin-top: 4px; word-break: break-word; }
+  .fix { font-size: 13px; margin-top: 6px; background: #fff8e6; padding: 8px 10px; border-radius: 6px; }
+  code { background: #eef1f6; padding: 1px 5px; border-radius: 4px; font-size: 12px; }
+  button { background: #c8202d; color: #fff; border: 0; border-radius: 8px; padding: 9px 16px; font-size: 14px; cursor: pointer; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Cek Sambungan Website ke Panel Admin</h1>
+  <div class="sub">Halaman ini memeriksa file website Anda satu per satu. Letakkan di folder yang sama dengan <code>index.html</code>. Alamat saat ini: <code id="here"></code></div>
+  <div id="verdict" class="verdict">Memeriksa...</div>
+  <div id="hasil"></div>
+  <p><button id="ulang">Periksa ulang</button></p>
+</div>
+<script>
+(function () {
+  var hasil = document.getElementById('hasil');
+  var verdict = document.getElementById('verdict');
+  document.getElementById('here').textContent = location.href.split('?')[0];
+
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  var counts;
+  function row(level, title, detail, fix) {
+    counts[level] = (counts[level] || 0) + 1;
+    var tag = { ok: 'OK', bad: 'GAGAL', warn: 'PERHATIAN', wait: '...' }[level];
+    var d = document.createElement('div');
+    d.className = 'row ' + level;
+    d.innerHTML = '<div class="t"><span class="tag">' + tag + '</span>' + esc(title) + '</div>' +
+      (detail ? '<div class="d">' + esc(detail) + '</div>' : '') +
+      (fix ? '<div class="fix"><b>Yang perlu dilakukan:</b> ' + esc(fix) + '</div>' : '');
+    hasil.appendChild(d);
+  }
+  function get(path) {
+    var url = path + (path.indexOf('?') > -1 ? '&' : '?') + '_=' + Date.now();
+    return fetch(url, { cache: 'no-store' }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.text();
+    });
+  }
+
+  function run() {
+    hasil.innerHTML = '';
+    counts = {};
+    verdict.className = 'verdict';
+    verdict.textContent = 'Memeriksa...';
+    var apiUrl = '';
+
+    // 1. index.html
+    get('index.html').then(function (t) {
+      var hasCms = t.indexOf('js/cms.js') > -1, hasCfg = t.indexOf('data-cfg') > -1;
+      if (hasCms && hasCfg) row('ok', 'index.html adalah versi BARU', 'Memuat js/cms.js dan penanda konten dinamis.');
+      else row('bad', 'index.html masih versi LAMA', 'Tidak memuat js/cms.js sehingga perubahan dari admin tidak pernah dibaca.',
+        'Unggah ulang SELURUH isi folder "website" dari paket ke folder utama (root) repo GitHub, menimpa index.html yang lama. Pastikan isinya tidak berada di dalam subfolder bernama "website".');
+    }, function (e) {
+      row('bad', 'index.html tidak ditemukan di folder ini', e.message, 'Letakkan cek-sambungan.html di folder yang sama dengan index.html.');
+    }).then(function () {
+      // 2. cms.js
+      return get('js/cms.js').then(function (t) {
+        if (t.indexOf('cms=debug') > -1) row('ok', 'js/cms.js adalah versi terbaru');
+        else if (t.indexOf('CMS_API') > -1) row('warn', 'js/cms.js ada tetapi versi lama', 'Fungsi cek "?cms=debug" belum ada.', 'Unggah ulang js/cms.js dari paket terbaru.');
+        else row('bad', 'js/cms.js bukan file yang benar', '', 'Unggah ulang js/cms.js dari paket.');
+      }, function (e) {
+        row('bad', 'js/cms.js tidak ditemukan', e.message, 'Unggah folder "js" lengkap dari paket (cms.js, config.js, script.js).');
+      });
+    }).then(function () {
+      // 3. config.js
+      return get('js/config.js').then(function (t) {
+        var m = t.match(/CMS_API\s*=\s*["']([^"']*)["']/);
+        apiUrl = m ? m[1].trim() : '';
+        if (!m) row('bad', 'js/config.js tidak berisi CMS_API', '', 'Unggah js/config.js dari paket lalu isi URL Web App Anda.');
+        else if (!apiUrl) row('bad', 'js/config.js masih KOSONG', 'CMS_API = ""', 'Isi dengan URL Web App (berakhiran /exec) dari menu Pengaturan di panel admin, lalu unggah ulang file ini.');
+        else if (!/\/exec$/.test(apiUrl)) row('warn', 'URL di config.js tidak berakhiran /exec', apiUrl, 'Salin ulang URL dari Terapkan > Kelola deployment.');
+        else row('ok', 'js/config.js terisi URL server', apiUrl);
+      }, function (e) {
+        row('bad', 'js/config.js tidak ditemukan', e.message, 'Unggah js/config.js dari paket dan isi URL Web App Anda.');
+      });
+    }).then(function () {
+      // 4. server
+      if (!apiUrl) { row('wait', 'Server belum bisa diperiksa', 'Menunggu config.js terisi.'); return; }
+      return fetch(apiUrl + (apiUrl.indexOf('?') > -1 ? '&' : '?') + 'action=public&_=' + Date.now(), { cache: 'no-store' })
+        .then(function (r) { return r.text(); })
+        .then(function (t) {
+          var j;
+          try { j = JSON.parse(t); } catch (e) { j = null; }
+          if (j && j.success) {
+            var d = j.data || {};
+            row('ok', 'Server membalas dengan data',
+              'Berita: ' + (d.berita || []).length + ', Foto: ' + (d.foto || []).length + ', Kegiatan: ' + (d.kegiatan || []).length +
+              ' | Judul beranda di admin: "' + ((d.config || {}).heroJudul || '') + '"');
+          } else if (j) {
+            row('bad', 'Server membalas tetapi gagal', j.message || '', 'Jalankan setupApp sekali di editor Apps Script, lalu buat Versi baru.');
+          } else {
+            row('bad', 'Server tidak membalas dengan data (bukan JSON)', t.slice(0, 120).replace(/\s+/g, ' '),
+              'Di Apps Script: Terapkan > Kelola deployment > pensil > "Yang memiliki akses" = Siapa saja, lalu Versi baru > Terapkan. Akun Google sekolah sering membatasi ini; gunakan akun Gmail biasa.');
+          }
+        }, function (e) {
+          row('bad', 'Server tidak dapat dihubungi', e.message, 'Periksa URL di config.js dan pengaturan akses deployment (harus "Siapa saja").');
+        });
+    }).then(function () {
+      // 5. script.js lama
+      return get('js/script.js').then(function (t) {
+        if (t.indexOf('newsData') > -1) row('warn', 'js/script.js masih versi lama', 'Data berita lama masih tertanam di kode.', 'Timpa dengan js/script.js dari paket.');
+        else row('ok', 'js/script.js adalah versi baru');
+      }, function () { row('warn', 'js/script.js tidak ditemukan', '', 'Unggah js/script.js dari paket.'); });
+    }).then(function () {
+      // 6. halaman-halaman baru
+      var pages = ['berita.html', 'news.html', 'kegiatan.html', 'gallery-photo.html', 'gallery-video.html', 'organization.html', 'pendaftaran.html'];
+      return Promise.all(pages.map(function (p) {
+        return get(p).then(function () { return null; }, function () { return p; });
+      })).then(function (r) {
+        var miss = r.filter(Boolean);
+        if (miss.length) row('warn', 'Ada halaman yang belum diunggah', miss.join(', '), 'Unggah file-file tersebut dari folder "website".');
+        else row('ok', 'Semua halaman website tersedia');
+      });
+    }).then(function () {
+      var bad = counts.bad || 0, warn = counts.warn || 0;
+      if (!bad && !warn) { verdict.className = 'verdict ok'; verdict.textContent = 'Semua beres. Jika perubahan belum terlihat, tekan Ctrl+F5 pada website Anda.'; }
+      else if (bad) { verdict.className = 'verdict bad'; verdict.textContent = bad + ' masalah ditemukan. Perbaiki dari yang paling atas.'; }
+      else { verdict.className = 'verdict'; verdict.textContent = warn + ' hal perlu diperhatikan.'; }
+    });
+  }
+  document.getElementById('ulang').onclick = run;
+  run();
+})();
+</script>
+</body>
+</html>
